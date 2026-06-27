@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Editar Colonia</title>
+
+<style>
+
+body{
+  background:#07090e;
+  color:white;
+  font-family:Arial;
+  padding:40px;
+}
+
+form{
+  max-width:600px;
+  margin:auto;
+  background:#171c28;
+  padding:30px;
+  border-radius:15px;
+}
+
+input, select{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border:none;
+  border-radius:10px;
+  background:#0f1320;
+  color:white;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#22d3a5;
+  color:white;
+  font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<form method="POST">
+
+<h2>Editar Colonia</h2>
+
+<input type="text" name="nombre"
+value="{{ colonia.nombre }}" required>
+
+<input type="text" name="cp"
+value="{{ colonia.cp }}" required>
+
+<input type="text" name="zona"
+value="{{ colonia.zona }}" required>
+
+<input type="number" name="habitantes"
+value="{{ colonia.habitantes }}" required>
+
+<select name="unidad" required>
+
+{% for unidad in unidades %}
+
+<option value="{{ unidad.numero }}"
+{% if unidad.numero == colonia.unidad %}
+selected
+{% endif %}
+>
+
+Unidad {{ unidad.numero }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+<button type="submit">
+Guardar cambios
+</button>
+
+</form>
+
+</body>
+</html>

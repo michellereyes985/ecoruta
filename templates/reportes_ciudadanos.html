@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Reportes</title>
+
+<style>
+
+body{
+  background:#07090e;
+  color:white;
+  font-family:Arial;
+  padding:30px;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+h1{
+  color:#e879f9;
+}
+
+.usuario{
+  color:#94a3b8;
+  margin-top:8px;
+}
+
+.btn-home{
+  background:#22c55e;
+  color:white;
+  padding:10px 14px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.btn-home:hover{
+  opacity:0.85;
+}
+
+form, table{
+  background:#171c28;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+}
+
+input, textarea{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border:none;
+  border-radius:8px;
+  background:#0f1320;
+  color:white;
+}
+
+textarea{
+  resize:none;
+  height:80px;
+}
+
+button{
+  background:#e879f9;
+  color:white;
+  border:none;
+  padding:10px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+button:hover{
+  opacity:0.85;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  background:#111827;
+  color:#e879f9;
+  padding:12px;
+}
+
+td{
+  padding:12px;
+  border-bottom:1px solid #1f2636;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+}
+
+.actions a{
+  padding:6px 10px;
+  border-radius:6px;
+  text-decoration:none;
+  color:white;
+}
+
+.edit{
+  background:#3b82f6;
+}
+
+.delete{
+  background:#ef4444;
+}
+
+@media(max-width:800px){
+
+  table{
+    display:block;
+    overflow-x:auto;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="top">
+
+  <div>
+
+    <h1>📣 Reportes</h1>
+
+    <div class="usuario">
+      Usuario: {{ session["usuario"] }}
+      | Rol: {{ session["rol"] }}
+    </div>
+
+  </div>
+
+  <div>
+
+    <a href="/" class="btn-home">
+      🏠 Inicio
+    </a>
+
+  </div>
+
+</div>
+{% if session["rol"] != "admin" %}
+
+<form method="POST">
+
+<input type="text"
+name="problema"
+placeholder="Problema"
+required>
+
+<textarea name="descripcion"
+placeholder="Descripción del problema"
+required></textarea>
+
+
+<input type="text"
+name="colonia"
+placeholder="Colonia"
+required>
+
+<button type="submit">
+  Guardar reporte
+</button>
+
+</form>
+
+
+{% endif %}
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Ciudadano</th>
+<th>Problema</th>
+<th>Descripción</th>
+<th>Fecha</th>
+<th>Colonia</th>
+
+{% if session["rol"] != "admin" %}
+<th>Acciones</th>
+{% endif %}
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for reporte in reportes %}
+
+<tr>
+
+<td>{{ reporte.usuario }}</td>
+<td>{{ reporte.problema }}</td>
+<td>{{ reporte.descripcion }}</td>
+<td>{{ reporte.fecha }}</td>
+<td>{{ reporte.colonia }}</td>
+
+{% if session["rol"] != "admin" %}
+
+<td class="actions">
+
+{% if reporte.usuario == session["usuario"] %}
+
+<a class="edit"
+href="/editar_reporte/{{ reporte._id }}">
+Editar
+</a>
+
+<a class="delete"
+href="/eliminar_reporte/{{ reporte._id }}"
+onclick="return confirm('¿Deseas eliminar este reporte?')">
+Eliminar
+</a>
+
+{% else %}
+
+-
+
+{% endif %}
+
+</td>
+
+{% endif %}
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</body>
+</html>

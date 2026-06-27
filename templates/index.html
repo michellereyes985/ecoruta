@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sistema Laboral Comunitario</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<style>
+  :root{
+    --bg:#07090e;--surface:#10141c;--card:#171c28;
+    --text:#f1f3f8;--muted:#5a6378;--border:#1f2636;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'DM Sans',sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:56px 24px;
+  }
+
+  .header{text-align:center;margin-bottom:52px;}
+  .header .tag{
+    display:inline-block;
+    font-size:.75rem;
+    color:#5a6378;
+    border:1px solid #1f2636;
+    border-radius:20px;
+    padding:4px 14px;
+    margin-bottom:18px;
+  }
+
+  .header h1{
+    font-family:'Syne',sans-serif;
+    font-size:clamp(2.4rem,6vw,4rem);
+    font-weight:800;
+  }
+
+  .header h1 em{font-style:normal;color:#f97316;}
+  .header p{color:var(--muted);margin-top:12px;max-width:480px;}
+
+  .section-label{
+    width:100%;
+    max-width:1040px;
+    font-size:.72rem;
+    color:var(--muted);
+    margin:20px 0 14px;
+    border-left:2px solid #1f2636;
+    padding-left:10px;
+  }
+
+  .grid{
+    display:grid;
+    gap:16px;
+    width:100%;
+    max-width:1040px;
+    margin-bottom:40px;
+  }
+
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+  .grid-4{grid-template-columns:repeat(4,1fr);}
+
+  @media(max-width:760px){
+    .grid-3,.grid-4{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:480px){
+    .grid-3,.grid-4{grid-template-columns:1fr;}
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:26px 22px;
+    text-decoration:none;
+    color:var(--text);
+    transition:.2s;
+  }
+
+  .card:hover{transform:translateY(-5px);border-color:var(--c);}
+
+  .icon{font-size:1.9rem;margin-bottom:10px;}
+  h2{color:var(--c);font-family:'Syne';font-size:1.05rem;}
+  p{color:var(--muted);font-size:.85rem;margin-top:6px;}
+
+  .c1{--c:#f0c040;}
+  .c2{--c:#3ecfcf;}
+  .c3{--c:#a78bfa;}
+  .c4{--c:#f97316;}
+  .c5{--c:#22d3a5;}
+  .c6{--c:#60a5fa;}
+  .c7{--c:#e879f9;}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+  <div class="tag">Sistema Municipal</div>
+  <h1>Sistema <em>Laboral</em><br>Comunitario</h1>
+  <p>Panel de módulos del sistema.</p>
+</div>
+
+<!-- CIUDADANÍA -->
+<div class="section-label">Ciudadanía</div>
+
+<div class="grid grid-3">
+
+  <a href="/observaciones.html" class="card c2">
+    <div class="icon">👁</div>
+    <h2>Observaciones</h2>
+    <p>Registro de observaciones comunitarias.</p>
+  </a>
+
+  <a href="/reportes_ciudadanos.html" class="card c3">
+    <div class="icon">📣</div>
+    <h2>Reportes</h2>
+    <p>Reportes ciudadanos con seguimiento.</p>
+  </a>
+
+</div>
+
+<!-- TRANSPORTE -->
+<div class="section-label">Transporte</div>
+
+<div class="grid grid-4">
+
+  <a href="/rutas.html" class="card c4">
+    <div class="icon">🗺</div>
+    <h2>Rutas</h2>
+    <p>Gestión de rutas.</p>
+  </a>
+
+  <a href="/colonias.html" class="card c5">
+    <div class="icon">🏘</div>
+    <h2>Colonias</h2>
+    <p>Catálogo de colonias.</p>
+  </a>
+
+  <a href="/horarios.html" class="card c6">
+    <div class="icon">🕐</div>
+    <h2>Horarios</h2>
+    <p>Horarios de servicio.</p>
+  </a>
+
+  <a href="/unidades.html" class="card c7">
+    <div class="icon">🚌</div>
+    <h2>Unidades</h2>
+    <p>Control de vehículos.</p>
+  </a>
+
+</div>
+
+</body>
+</html>

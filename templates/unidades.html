@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Unidades</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<style>
+
+:root{
+  --bg:#07090e;
+  --card:#171c28;
+  --border:#1f2636;
+  --text:#f1f3f8;
+  --muted:#6b7280;
+  --accent:#e879f9;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  padding:40px 20px;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:30px;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+h1{
+  font-family:'Syne',sans-serif;
+  color:var(--accent);
+}
+
+.usuario{
+  color:#94a3b8;
+  margin-top:8px;
+}
+
+.btn-home{
+  background:#22c55e;
+  color:white;
+  padding:10px 15px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.btn-logout{
+  background:#ef4444;
+  color:white;
+  padding:10px 15px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+  margin-left:10px;
+}
+
+.form-card,
+.table-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:25px;
+  margin-bottom:25px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+input,
+select{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#0f1320;
+  color:white;
+}
+
+button{
+  margin-top:15px;
+  background:var(--accent);
+  border:none;
+  padding:12px 18px;
+  border-radius:10px;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  background:#111827;
+  color:var(--accent);
+  padding:12px;
+}
+
+td{
+  padding:12px;
+  border-bottom:1px solid var(--border);
+}
+
+a{
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.edit{
+  color:#60a5fa;
+}
+
+.delete{
+  color:#ef4444;
+}
+
+@media(max-width:800px){
+
+.form-grid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+<div class="topbar">
+
+<div>
+
+<h1>🚌 Unidades</h1>
+
+<div class="usuario">
+Usuario: {{ session["usuario"] }}
+| Rol: {{ session["rol"] }}
+</div>
+
+</div>
+
+<div>
+
+<a href="/" class="btn-home">
+🏠 Inicio
+</a>
+
+<a href="/logout" class="btn-logout">
+Cerrar sesión
+</a>
+
+</div>
+
+</div>
+
+<!-- FORM -->
+{% if session["rol"] == "admin" %}
+
+<div class="form-card">
+
+<form method="POST">
+
+<div class="form-grid">
+
+<input
+name="numero"
+placeholder="Número"
+required>
+
+<input
+name="placas"
+placeholder="Placas"
+required>
+
+<input
+name="modelo"
+placeholder="Modelo"
+required>
+
+<input
+name="capacidad"
+type="number"
+placeholder="Capacidad"
+required>
+
+<input
+name="toneladas"
+type="number"
+placeholder="Toneladas"
+required>
+
+<input
+name="conductor"
+placeholder="Conductor"
+required>
+
+<select name="estado">
+
+<option>
+Activa
+</option>
+
+<option>
+Mantenimiento
+</option>
+
+<option>
+Inactiva
+</option>
+
+</select>
+
+</div>
+
+<button>
+Guardar
+</button>
+
+</form>
+
+</div>
+
+{% endif %}
+
+<!-- TABLA -->
+<div class="table-card">
+
+<table>
+
+<tr>
+
+<th>#</th>
+<th>Placas</th>
+<th>Modelo</th>
+<th>Capacidad</th>
+<th>Toneladas</th>
+<th>Conductor</th>
+<th>Estado</th>
+
+{% if session["rol"] == "admin" %}
+<th>Acciones</th>
+{% endif %}
+
+</tr>
+
+{% for unidad in unidades %}
+
+<tr>
+
+<td>{{ unidad.numero }}</td>
+
+<td>{{ unidad.placas }}</td>
+
+<td>{{ unidad.modelo }}</td>
+
+<td>{{ unidad.capacidad }}</td>
+
+<td>{{ unidad.toneladas }}</td>
+
+<td>{{ unidad.conductor }}</td>
+
+<td>{{ unidad.estado }}</td>
+
+{% if session["rol"] == "admin" %}
+
+<td>
+
+<a class="edit"
+href="/editar_unidad/{{ unidad._id }}">
+Editar
+</a>
+
+|
+
+<a class="delete"
+href="/eliminar_unidad/{{ unidad._id }}"
+onclick="return confirm('¿Eliminar?')">
+Eliminar
+</a>
+
+</td>
+
+{% endif %}
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Editar Reporte</title>
+
+<style>
+
+body{
+  background:#07090e;
+  color:white;
+  font-family:Arial;
+  padding:30px;
+}
+
+.container{
+  max-width:800px;
+  margin:auto;
+}
+
+h1{
+  color:#e879f9;
+}
+
+form{
+  background:#171c28;
+  padding:20px;
+  border-radius:12px;
+}
+
+input, textarea{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:none;
+  border-radius:8px;
+  background:#0f1320;
+  color:white;
+}
+
+textarea{
+  height:100px;
+  resize:none;
+}
+
+button{
+  background:#e879f9;
+  color:white;
+  border:none;
+  padding:10px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.btn-back{
+  display:inline-block;
+  margin-top:15px;
+  background:#60a5fa;
+  color:white;
+  padding:10px 14px;
+  border-radius:10px;
+  text-decoration:none;
+}
+
+.btn-back:hover{
+  opacity:0.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>✏️ Editar Reporte</h1>
+
+<form method="POST">
+
+<input type="text"
+name="problema"
+value="{{ reporte.problema }}"
+required>
+
+<textarea name="descripcion" required>{{ reporte.descripcion }}</textarea>
+
+
+<input type="text"
+name="colonia"
+value="{{ reporte.colonia }}"
+required>
+
+<button type="submit">
+Guardar cambios
+</button>
+
+</form>
+
+<a href="/reportes_ciudadanos.html" class="btn-back">
+← Volver
+</a>
+
+</div>
+
+</body>
+</html>

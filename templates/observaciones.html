@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Observaciones</title>
+
+<style>
+
+body{
+  background:#07090e;
+  color:white;
+  font-family:Arial;
+  padding:30px;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+h1{
+  color:#facc15;
+}
+
+form, table{
+  background:#171c28;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+}
+
+input, select, textarea{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border:none;
+  border-radius:8px;
+  background:#0f1320;
+  color:white;
+}
+
+textarea{
+  height:80px;
+}
+
+button{
+  background:#facc15;
+  color:black;
+  border:none;
+  padding:10px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  background:#111827;
+  color:#facc15;
+  padding:12px;
+}
+
+td{
+  padding:12px;
+  border-bottom:1px solid #1f2636;
+}
+
+.actions a{
+  padding:6px 10px;
+  border-radius:6px;
+  text-decoration:none;
+  color:white;
+  margin-right:5px;
+}
+
+.edit{background:#3b82f6;}
+.delete{background:#ef4444;}
+
+.btn-home{
+  background:#22c55e;
+  color:white;
+  padding:10px;
+  border-radius:10px;
+  text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="top">
+<h1>📝 Observaciones</h1>
+<a href="/" class="btn-home">🏠 Inicio</a>
+</div>
+
+{% if session["rol"] != "admin" %}
+
+<form method="POST">
+
+<select name="unidad" required>
+<option value="">Selecciona unidad</option>
+{% for u in unidades %}
+<option value="{{ u.numero }}">Unidad {{ u.numero }}</option>
+{% endfor %}
+</select>
+
+<textarea name="observacion" placeholder="Observación" required></textarea>
+
+
+<select name="estado" required>
+<option value="Activa">Activa</option>
+<option value="Revisar">Revisar</option>
+<option value="Resuelta">Resuelta</option>
+</select>
+
+<button type="submit">Guardar</button>
+
+</form>
+
+{% endif %}
+</form>
+
+<table>
+
+<tr>
+<th>Unidad</th>
+<th>Observación</th>
+<th>Fecha</th>
+<th>Estado</th>
+<th>Acciones</th>
+
+</tr>
+
+{% for o in observaciones %}
+
+<tr>
+    <td>{{ o.unidad }}</td>
+    <td>{{ o.observacion }}</td>
+    <td>{{ o.fecha }}</td>
+    <td>{{ o.estado }}</td>
+
+    <td>
+
+    {% if session["rol"] != "admin" and o.usuario == session["usuario"] %}
+
+        <a class="edit" href="/editar_observacion/{{ o._id }}">Editar</a>
+
+        <a class="delete"
+           href="/eliminar_observacion/{{ o._id }}"
+           onclick="return confirm('¿Eliminar esta observación?')">
+            Eliminar
+        </a>
+
+    {% endif %}
+
+    </td>
+
+</tr>
+
+
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Rutas</title>
+
+<style>
+
+body{
+  background:#07090e;
+  color:white;
+  font-family:Arial;
+  padding:30px;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+}
+
+/* HEADER */
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+h1{
+  color:#f97316;
+}
+
+/* BOTONES */
+.btn-home{
+  background:#22c55e;
+  color:white;
+  padding:10px 14px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+  margin-right:10px;
+}
+
+.btn-back{
+  background:#60a5fa;
+  color:white;
+  padding:10px 14px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.btn-logout{
+  background:#ef4444;
+  color:white;
+  padding:10px 14px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.btn-home:hover,
+.btn-back:hover,
+.btn-logout:hover{
+  opacity:0.85;
+}
+
+/* FORM Y TABLA */
+form, table{
+  background:#171c28;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+}
+
+input, select{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border:none;
+  border-radius:8px;
+  background:#0f1320;
+  color:white;
+}
+
+button{
+  background:#f97316;
+  color:white;
+  border:none;
+  padding:10px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  background:#111827;
+  color:#f97316;
+  padding:12px;
+}
+
+td{
+  padding:12px;
+  border-bottom:1px solid #1f2636;
+}
+
+/* ACCIONES */
+.actions a{
+  padding:6px 10px;
+  border-radius:6px;
+  text-decoration:none;
+  color:white;
+  margin-right:5px;
+}
+
+.edit{
+  background:#3b82f6;
+}
+
+.delete{
+  background:#ef4444;
+}
+
+.usuario{
+  color:#94a3b8;
+  margin-bottom:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+<div class="top">
+
+<div>
+  <h1>🚌 Gestión de Rutas</h1>
+
+  <div class="usuario">
+    Usuario: {{ session["usuario"] }}
+    | Rol: {{ session["rol"] }}
+  </div>
+</div>
+
+<div>
+
+  <a href="/" class="btn-home">
+    🏠 Inicio
+  </a>
+
+  <a href="/logout" class="btn-logout">
+    Cerrar sesión
+  </a>
+
+</div>
+
+</div>
+
+<!-- FORM -->
+{% if session["rol"] == "admin" %}
+
+<form method="POST">
+
+<input type="text"
+name="numero_ruta"
+placeholder="Número de ruta"
+required>
+
+<input type="text"
+name="nombre_ruta"
+placeholder="Nombre de ruta"
+required>
+
+<input type="text"
+name="origen"
+placeholder="Origen"
+required>
+
+<input type="text"
+name="destino"
+placeholder="Destino"
+required>
+
+<select name="estado" required>
+
+  <option value="">Estado</option>
+
+  <option value="Activo">
+    Activo
+  </option>
+
+  <option value="Suspendido">
+    Suspendido
+  </option>
+
+</select>
+
+<button type="submit">
+Guardar Ruta
+</button>
+
+</form>
+
+{% endif %}
+
+<!-- TABLA -->
+<table>
+
+<tr>
+  <th>Número</th>
+  <th>Nombre</th>
+  <th>Origen</th>
+  <th>Destino</th>
+  <th>Estado</th>
+
+  {% if session["rol"] == "admin" %}
+  <th>Acciones</th>
+  {% endif %}
+</tr>
+
+{% for ruta in rutas %}
+
+<tr>
+
+  <td>{{ ruta.numero_ruta }}</td>
+  <td>{{ ruta.nombre_ruta }}</td>
+  <td>{{ ruta.origen }}</td>
+  <td>{{ ruta.destino }}</td>
+  <td>{{ ruta.estado }}</td>
+
+  {% if session["rol"] == "admin" %}
+
+  <td class="actions">
+
+    <a class="edit"
+    href="/editar_ruta/{{ ruta._id }}">
+      Editar
+    </a>
+
+    <a class="delete"
+    href="/eliminar_ruta/{{ ruta._id }}">
+      Eliminar
+    </a>
+
+  </td>
+
+  {% endif %}
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

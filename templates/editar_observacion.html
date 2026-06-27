@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Editar Observación</title>
+
+<style>
+body{
+  background:#07090e;
+  color:white;
+  font-family:Arial;
+  padding:30px;
+}
+
+.container{
+  max-width:600px;
+  margin:auto;
+}
+
+form{
+  background:#171c28;
+  padding:20px;
+  border-radius:12px;
+}
+
+input, select, textarea{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:none;
+  border-radius:8px;
+  background:#0f1320;
+  color:white;
+}
+
+button{
+  background:#facc15;
+  color:black;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+}
+
+a{
+  display:inline-block;
+  margin-top:10px;
+  color:#60a5fa;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>✏️ Editar Observación</h1>
+
+<form method="POST">
+
+<input type="text" name="unidad" value="{{ observacion.unidad }}">
+
+<textarea name="observacion">{{ observacion.observacion }}</textarea>
+
+<input type="date" name="fecha" value="{{ observacion.fecha }}">
+
+<select name="estado">
+<option value="Activa">Activa</option>
+<option value="Revisar">Revisar</option>
+<option value="Resuelta">Resuelta</option>
+</select>
+
+<button type="submit">Guardar cambios</button>
+
+</form>
+
+<a href="/observaciones.html">← Volver</a>
+
+</div>
+
+</body>
+</html>

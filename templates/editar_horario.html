@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Editar Horario</title>
+
+<style>
+
+body{
+background:#07090e;
+color:white;
+font-family:Arial;
+padding:40px;
+}
+
+form{
+max-width:700px;
+margin:auto;
+background:#171c28;
+padding:30px;
+border-radius:15px;
+}
+
+input, select{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:none;
+border-radius:10px;
+background:#0f1320;
+color:white;
+}
+
+button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#60a5fa;
+color:white;
+font-weight:bold;
+}
+
+.checkbox-group{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin:15px 0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<form method="POST">
+
+<h2>Editar Horario</h2>
+
+<input type="text"
+name="ruta"
+value="{{ horario.ruta }}"
+required>
+
+<select name="unidad">
+
+{% for unidad in unidades %}
+
+<option value="{{ unidad.numero }}"
+{% if unidad.numero == horario.unidad %}
+selected
+{% endif %}
+>
+
+Unidad {{ unidad.numero }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+<select name="turno">
+
+<option value="Matutino"
+{% if horario.turno == "Matutino" %}
+selected
+{% endif %}
+>
+Matutino
+</option>
+
+<option value="Vespertino"
+{% if horario.turno == "Vespertino" %}
+selected
+{% endif %}
+>
+Vespertino
+</option>
+
+</select>
+
+<select name="estado">
+
+<option value="Activo"
+{% if horario.estado == "Activo" %}
+selected
+{% endif %}
+>
+Activo
+</option>
+
+<option value="Suspendido"
+{% if horario.estado == "Suspendido" %}
+selected
+{% endif %}
+>
+Suspendido
+</option>
+
+</select>
+
+<input type="time"
+name="hora_inicio"
+value="{{ horario.hora_inicio }}">
+
+<input type="time"
+name="hora_fin"
+value="{{ horario.hora_fin }}">
+
+<h3>Días</h3>
+
+<div class="checkbox-group">
+
+{% set dias_semana = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"] %}
+
+{% for dia in dias_semana %}
+
+<label>
+
+<input type="checkbox"
+name="dias"
+value="{{ dia }}"
+
+{% if dia in horario.dias %}
+checked
+{% endif %}
+>
+
+{{ dia }}
+
+</label>
+
+{% endfor %}
+
+</div>
+
+<button type="submit">
+Guardar cambios
+</button>
+
+</form>
+
+</body>
+</html>

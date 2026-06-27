@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Editar Ruta</title>
+
+<style>
+
+body{
+  background:#07090e;
+  color:white;
+  font-family:Arial;
+  padding:30px;
+}
+
+form{
+  max-width:600px;
+  margin:auto;
+  background:#171c28;
+  padding:20px;
+  border-radius:12px;
+}
+
+input, select{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:none;
+  border-radius:8px;
+  background:#0f1320;
+  color:white;
+}
+
+button{
+  background:#f97316;
+  color:white;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  width:100%;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<form method="POST">
+
+<h2>Editar Ruta</h2>
+
+<input type="text" name="numero_ruta" value="{{ ruta.numero_ruta }}" required>
+
+<input type="text" name="nombre_ruta" value="{{ ruta.nombre_ruta }}" required>
+
+<input type="text" name="origen" value="{{ ruta.origen }}" required>
+
+<input type="text" name="destino" value="{{ ruta.destino }}" required>
+
+<select name="estado">
+
+<option value="Activo" {% if ruta.estado=="Activo" %}selected{% endif %}>Activo</option>
+
+<option value="Suspendido" {% if ruta.estado=="Suspendido" %}selected{% endif %}>Suspendido</option>
+
+</select>
+
+<button type="submit">Guardar cambios</button>
+
+</form>
+
+</body>
+</html>

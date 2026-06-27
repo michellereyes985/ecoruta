@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Horarios</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<style>
+
+:root{
+  --bg:#07090e;
+  --card:#171c28;
+  --border:#1f2636;
+  --text:#f1f3f8;
+  --accent:#60a5fa;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  padding:40px 20px;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+h1{
+  font-family:'Syne',sans-serif;
+  color:var(--accent);
+}
+
+.usuario{
+  color:#94a3b8;
+  margin-top:8px;
+}
+
+.btn{
+  background:var(--accent);
+  color:white;
+  text-decoration:none;
+  padding:12px 18px;
+  border-radius:12px;
+  font-weight:bold;
+}
+
+.btn-logout{
+  background:#ef4444;
+  color:white;
+  text-decoration:none;
+  padding:12px 18px;
+  border-radius:12px;
+  font-weight:bold;
+  margin-left:10px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:25px;
+  margin-bottom:25px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+input, select{
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#0f1320;
+  color:white;
+}
+
+.checkbox-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:10px;
+}
+
+.checkbox-group label{
+  background:#111827;
+  padding:8px 12px;
+  border-radius:10px;
+}
+
+button{
+  margin-top:20px;
+  padding:14px 20px;
+  border:none;
+  border-radius:12px;
+  background:var(--accent);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th, td{
+  padding:14px;
+  text-align:left;
+}
+
+th{
+  background:#111827;
+  color:var(--accent);
+}
+
+tr{
+  border-bottom:1px solid var(--border);
+}
+
+.acciones{
+  display:flex;
+  gap:10px;
+}
+
+.editar{
+  background:#3b82f6;
+  color:white;
+  padding:8px 12px;
+  border-radius:8px;
+  text-decoration:none;
+}
+
+.eliminar{
+  background:#ef4444;
+  color:white;
+  padding:8px 12px;
+  border-radius:8px;
+  text-decoration:none;
+}
+
+@media(max-width:800px){
+
+.form-grid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+<div class="top">
+
+<div>
+
+<h1>🕐 Gestión de Horarios</h1>
+
+<div class="usuario">
+Usuario: {{ session["usuario"] }}
+| Rol: {{ session["rol"] }}
+</div>
+
+</div>
+
+<div>
+
+<a href="/" class="btn">
+🏠 Inicio
+</a>
+
+<a href="/logout" class="btn-logout">
+Cerrar sesión
+</a>
+
+</div>
+
+</div>
+
+<!-- FORMULARIO -->
+{% if session["rol"] == "admin" %}
+
+<div class="card">
+
+<form method="POST">
+
+<div class="form-grid">
+
+<input type="text"
+name="ruta"
+placeholder="Nombre de la ruta"
+required>
+
+<select name="unidad" required>
+
+<option value="">Unidad asignada</option>
+
+{% for unidad in unidades %}
+
+<option value="{{ unidad.numero }}">
+Unidad {{ unidad.numero }}
+</option>
+
+{% endfor %}
+
+</select>
+
+<select name="turno" required>
+
+<option value="">Turno</option>
+
+<option value="Matutino">
+Matutino
+</option>
+
+<option value="Vespertino">
+Vespertino
+</option>
+
+</select>
+
+<select name="estado" required>
+
+<option value="">Estado</option>
+
+<option value="Activo">
+Activo
+</option>
+
+<option value="Suspendido">
+Suspendido
+</option>
+
+</select>
+
+<input type="time"
+name="hora_inicio"
+required>
+
+<input type="time"
+name="hora_fin"
+required>
+
+</div>
+
+<h3 style="margin-top:20px;">
+Días de operación
+</h3>
+
+<div class="checkbox-group">
+
+<label>
+<input type="checkbox" name="dias" value="Lunes">
+Lunes
+</label>
+
+<label>
+<input type="checkbox" name="dias" value="Martes">
+Martes
+</label>
+
+<label>
+<input type="checkbox" name="dias" value="Miércoles">
+Miércoles
+</label>
+
+<label>
+<input type="checkbox" name="dias" value="Jueves">
+Jueves
+</label>
+
+<label>
+<input type="checkbox" name="dias" value="Viernes">
+Viernes
+</label>
+
+<label>
+<input type="checkbox" name="dias" value="Sábado">
+Sábado
+</label>
+
+<label>
+<input type="checkbox" name="dias" value="Domingo">
+Domingo
+</label>
+
+</div>
+
+<button type="submit">
+Guardar horario
+</button>
+
+</form>
+
+</div>
+
+{% endif %}
+
+<!-- TABLA -->
+<div class="card">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Ruta</th>
+<th>Unidad</th>
+<th>Turno</th>
+<th>Estado</th>
+<th>Horario</th>
+<th>Días</th>
+
+{% if session["rol"] == "admin" %}
+<th>Acciones</th>
+{% endif %}
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for horario in horarios %}
+
+<tr>
+
+<td>{{ horario.ruta }}</td>
+
+<td>
+🚌 {{ horario.unidad }}
+</td>
+
+<td>{{ horario.turno }}</td>
+
+<td>{{ horario.estado }}</td>
+
+<td>
+{{ horario.hora_inicio }}
+-
+{{ horario.hora_fin }}
+</td>
+
+<td>
+{{ ", ".join(horario.dias) }}
+</td>
+
+{% if session["rol"] == "admin" %}
+
+<td class="acciones">
+
+<a class="editar"
+href="/editar_horario/{{ horario._id }}">
+Editar
+</a>
+
+<a class="eliminar"
+href="/eliminar_horario/{{ horario._id }}">
+Eliminar
+</a>
+
+</td>
+
+{% endif %}
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+</html>

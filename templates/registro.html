@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Registro</title>
+
+<style>
+
+body{
+    background:#0f172a;
+    font-family:Arial;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    color:white;
+}
+
+form{
+    background:#1e293b;
+    padding:40px;
+    border-radius:10px;
+    width:300px;
+}
+
+input, select{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:20px;
+    border:none;
+    background:#3b82f6;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<form method="POST">
+
+<h2>Registro Ciudadano</h2>
+
+<input type="text" name="nombre" placeholder="Nombre" required>
+
+<input type="email" name="correo" placeholder="Correo" required>
+
+<input type="password" name="password" placeholder="Contraseña" required>
+
+<!-- 👇 NUEVO CAMPO DE ROL -->
+<select name="rol" required>
+    <option value="">Selecciona un rol</option>
+    <option value="conductor">Conductor</option>
+    <option value="admin">Admin</option>
+</select>
+
+<button type="submit">
+Registrarse
+</button>
+
+</form>
+
+</body>
+</html>

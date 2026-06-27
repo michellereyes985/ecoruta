@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Editar Unidad</title>
+
+<style>
+body{
+  background:#07090e;
+  color:white;
+  font-family:Arial;
+  padding:40px;
+}
+
+form{
+  max-width:500px;
+  margin:auto;
+  background:#171c28;
+  padding:20px;
+  border-radius:12px;
+}
+
+input,select{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border:none;
+  border-radius:8px;
+}
+
+button{
+  background:#e879f9;
+  color:white;
+  border:none;
+  padding:10px;
+  width:100%;
+  border-radius:8px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2 style="text-align:center;">Editar Unidad</h2>
+
+<form method="POST">
+
+<input name="numero" value="{{ unidad.numero }}">
+<input name="placas" value="{{ unidad.placas }}">
+<input name="modelo" value="{{ unidad.modelo }}">
+<input name="capacidad" value="{{ unidad.capacidad }}">
+<input name="toneladas" value="{{ unidad.toneladas }}">
+<input name="conductor" value="{{ unidad.conductor }}">
+
+<select name="estado">
+  <option value="Activa" {% if unidad.estado=="Activa" %}selected{% endif %}>Activa</option>
+  <option value="Mantenimiento" {% if unidad.estado=="Mantenimiento" %}selected{% endif %}>Mantenimiento</option>
+  <option value="Inactiva" {% if unidad.estado=="Inactiva" %}selected{% endif %}>Inactiva</option>
+</select>
+
+<button>Guardar cambios</button>
+
+</form>
+
+<br>
+<div style="text-align:center;">
+  <a href="/unidades.html" style="color:#60a5fa;">← Volver</a>
+</div>
+
+</body>
+</html>

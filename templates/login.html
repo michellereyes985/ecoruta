@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Login EcoRuta</title>
+
+<style>
+
+body{
+    background:#0f172a;
+    font-family:Arial;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    color:white;
+}
+
+form{
+    background:#1e293b;
+    padding:40px;
+    border-radius:10px;
+    width:300px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:20px;
+    border:none;
+    background:#22c55e;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+a{
+    color:#38bdf8;
+}
+
+.error{
+    color:red;
+    margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<form method="POST">
+
+<h2>Iniciar Sesión</h2>
+
+<input type="email" name="correo" placeholder="Correo" required>
+
+<input type="password" name="password" placeholder="Contraseña" required>
+
+<button type="submit">
+Ingresar
+</button>
+
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
+<p>
+¿No tienes cuenta?
+<a href="/registro">Registrarse</a>
+</p>
+
+</form>
+
+</body>
+</html>

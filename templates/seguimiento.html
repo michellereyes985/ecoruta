@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Seguimiento de Rutas</title>
+
+<meta http-equiv="refresh" content="8">
+
+<!-- 🗺️ LEAFLET (MAPA GRATIS) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0b0f1a;
+    color:white;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+}
+
+h1{
+    color:#facc15;
+}
+
+/* 🗺️ MAPA */
+#map{
+    height:400px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+/* CARD ESTILO UBER */
+.card{
+    background:#171c28;
+    padding:20px;
+    margin-bottom:15px;
+    border-radius:12px;
+    border-left:6px solid #22c55e;
+}
+
+.estado{
+    font-weight:bold;
+    padding:5px 10px;
+    border-radius:8px;
+    display:inline-block;
+}
+
+/* ESTADOS */
+.en-ruta{ background:#22c55e; color:black; }
+.pausa{ background:#facc15; color:black; }
+.finalizado{ background:#ef4444; color:white; }
+
+.info{
+    margin-top:8px;
+    color:#cbd5e1;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🚛 Seguimiento de Rutas (EcoRuta PRO)</h1>
+
+<!-- 🗺️ MAPA -->
+<div id="map"></div>
+
+{% for r in rutas %}
+
+<div class="card">
+
+    <h2>🚛 Unidad {{ r.numero }}</h2>
+
+    <span class="estado
+        {% if r.estado == 'Activa' %}en-ruta{% endif %}
+        {% if r.estado == 'En pausa' %}pausa{% endif %}
+        {% if r.estado == 'Inactiva' %}finalizado{% endif %}
+    ">
+        {{ r.estado }}
+    </span>
+
+    <div class="info">👨‍✈️ Conductor: {{ r.conductor }}</div>
+    <div class="info">🚚 Placas: {{ r.placas }}</div>
+    <div class="info">⚙️ Modelo: {{ r.modelo }}</div>
+    <div class="info">📦 Capacidad: {{ r.capacidad }} ton</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<!-- 🧠 MAPA + MOVIMIENTO SIMULADO -->
+<script>
+
+// 📍 CENTRO (puedes cambiarlo a tu ciudad)
+var map = L.map('map').setView([19.4326, -99.1332], 13);
+
+// 🗺️ MAPA BASE
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'EcoRuta'
+}).addTo(map);
+
+// 🚛 SIMULACIÓN DE CAMIONES (PUEDES AGREGAR MÁS)
+var rutas = [
+    [19.4326, -99.1332],
+    [19.4350, -99.1300],
+    [19.4400, -99.1280],
+    [19.4450, -99.1250],
+    [19.4500, -99.1200]
+];
+
+// 🚛 MARCADOR
+var camion = L.marker([19.4326, -99.1332]).addTo(map);
+
+var i = 0;
+
+// 🔄 MOVIMIENTO SIMULADO
+function moverCamion(){
+
+    if(i < rutas.length){
+        camion.setLatLng(rutas[i]);
+        i++;
+    }else{
+        i = 0; // reinicia (tipo loop Uber)
+    }
+
+}
+
+// cada 3 segundos se mueve
+setInterval(moverCamion, 3000);
+
+</script>
+
+</body>
+</html>
