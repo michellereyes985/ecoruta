@@ -613,7 +613,6 @@ def editar_observacion(id):
         datos = {
             "unidad": request.form["unidad"],
             "observacion": request.form["observacion"],
-            "fecha": request.form["fecha"],
             "estado": request.form["estado"]
         }
 
